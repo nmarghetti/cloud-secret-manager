@@ -19,6 +19,13 @@ deactivate
 poetry -C . run secret-manager --help
 ```
 
+Format the code:
+
+```shell
+# Format the code with isort and autopep8
+./format.sh
+```
+
 ## GCP
 
 ```shell

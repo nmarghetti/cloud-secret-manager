@@ -11,6 +11,14 @@
       "program": "${workspaceFolder}/.venv/bin/secret-manager",
       "python": "${workspaceFolder}/.venv/bin/python",
       "args": ["--help"]
+    },
+    {
+      "name": "secret-manager aws list",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/.venv/bin/secret-manager",
+      "python": "${workspaceFolder}/.venv/bin/python",
+      "args": ["--project", "project", "aws", "--aws-region", "eu-west-1", "list", "--secrets", "cluster"]
     }
   ]
 }

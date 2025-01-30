@@ -17,7 +17,7 @@ declare -A packages=(
 )
 
 declare -A dev_packages=(
-  ['common']='toml autopep8'
+  ['common']='toml autopep8 isort'
 )
 
 if [ ! -d ./secret_manager ]; then

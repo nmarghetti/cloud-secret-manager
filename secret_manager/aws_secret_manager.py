@@ -1,7 +1,8 @@
 #! /usr/bin/env python3
 
 import boto3
-from botocore.exceptions import ClientError, NoCredentialsError, PartialCredentialsError
+from botocore.exceptions import (ClientError, NoCredentialsError,
+                                 PartialCredentialsError)
 
 from secret_manager.secret_manager import SecretManager
 
@@ -10,7 +11,8 @@ class AwsSecretManager(SecretManager):
     def __init__(self, region_name):
         self.region_name = region_name
         try:
-            self.client = boto3.client("secretsmanager", region_name=self.region_name)
+            self.client = boto3.client(
+                "secretsmanager", region_name=self.region_name)
         except (NoCredentialsError, PartialCredentialsError) as e:
             print(f"Error: {e}")
             raise PermissionError(
@@ -50,7 +52,8 @@ class AwsSecretManager(SecretManager):
 
     def create_secret(self, secret_id, secret_value):
         try:
-            self.client.create_secret(Name=secret_id, SecretString=secret_value)
+            self.client.create_secret(
+                Name=secret_id, SecretString=secret_value)
             print(f"Secret {secret_id} created successfully.")
         except ClientError as e:
             print(f"Error: {e}")
@@ -77,7 +80,8 @@ class AwsSecretManager(SecretManager):
         if not self.secret_exists(secret_id):
             raise ValueError(f"Secret '{secret_id}' does not exist")
         try:
-            self.client.update_secret(SecretId=secret_id, SecretString=secret_value)
+            self.client.update_secret(
+                SecretId=secret_id, SecretString=secret_value)
             print(f"Secret {secret_id} updated successfully.")
         except ClientError as e:
             print(f"Error: {e}")
@@ -99,7 +103,8 @@ class AwsSecretManager(SecretManager):
 
     def delete_secret(self, secret_id):
         self.client.delete_secret(
-            request={"name": self.client.secret_path(self.project_id, secret_id)}
+            request={"name": self.client.secret_path(
+                self.project_id, secret_id)}
         )
 
     def list_versions(self, secret_id):
@@ -112,7 +117,8 @@ class AwsSecretManager(SecretManager):
             for version in versions:
                 version_id = version.get("VersionId")
                 created_date = version.get("CreatedDate")
-                print(f"  - VersionId: {version_id}, CreatedDate: {created_date}")
+                print(
+                    f"  - VersionId: {version_id}, CreatedDate: {created_date}")
         except ClientError as e:
             print(f"Error: {e}")
 

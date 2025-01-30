@@ -1,16 +1,24 @@
 #! /usr/bin/env python3
 
-import os
 import argparse
 import json
+import os
 import subprocess
-import traceback
-import yaml
 
-from typing import List
+import yaml
 
 from secret_manager.aws_secret_manager import AwsSecretManager
 from secret_manager.gcp_secret_manager import GcpSecretManager
+
+
+def prettify_yaml_file(file_path):
+    subprocess.run(
+        f"type sponge && type yq && yq -P <{file_path} | sponge {file_path}",
+        shell=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True,
+    )
 
 
 def get_secret_manager(args):
@@ -80,6 +88,9 @@ def import_secrets(args):
                 )
             with open(secret_file, "w", encoding="utf8") as file:
                 file.write(secret_content)
+            if secret in args.yaml_secrets:
+                prettify_yaml_file(secret_file)
+
             print(f"Importing secret {secret_id} into {secret_file}")
         else:
             print(f"Secret {secret_id} not found in {args.project}")
@@ -208,6 +219,8 @@ def diff_secrets(args):
             )
         with open(compare_secret_file, "w", encoding="utf8") as file:
             file.write(secret_content)
+        if secret in args.yaml_secrets:
+            prettify_yaml_file(compare_secret_file)
 
         secret_file = f"{secret_path}/{secret}.{secret_extension}"
         if compare_version != "local":
@@ -224,6 +237,8 @@ def diff_secrets(args):
                 )
             with open(secret_file, "w", encoding="utf8") as file:
                 file.write(secret_content)
+            if secret in args.yaml_secrets:
+                prettify_yaml_file(secret_file)
 
         print(f"Diff between {compare_secret_file} and {secret_file}")
         result = subprocess.run(

@@ -2,9 +2,9 @@
 
 import os
 
-from google.cloud import secretmanager
-from google.api_core.exceptions import NotFound, Forbidden
+from google.api_core.exceptions import Forbidden, NotFound
 from google.auth.exceptions import DefaultCredentialsError
+from google.cloud import secretmanager
 
 
 class GcpSecretManager:
@@ -94,7 +94,8 @@ class GcpSecretManager:
 
     def delete_secret(self, secret_id):
         self.client.delete_secret(
-            request={"name": self.client.secret_path(self.project_id, secret_id)}
+            request={"name": self.client.secret_path(
+                self.project_id, secret_id)}
         )
 
     def list_versions(self, secret_id):
@@ -104,15 +105,18 @@ class GcpSecretManager:
         versions = [
             version
             for version in self.client.list_secret_versions(
-                request={"parent": f"projects/{self.project_id}/secrets/{secret_id}"}
+                request={
+                    "parent": f"projects/{self.project_id}/secrets/{secret_id}"}
             )
             if version.state == 1
         ]
-        print(", ".join([os.path.basename(version.name) for version in versions]))
+        print(", ".join([os.path.basename(version.name)
+              for version in versions]))
 
     def delete_version(self, secret_id, version):
         if not self.secret_version_exists(secret_id, version):
-            raise ValueError(f"Secret '{secret_id}' version '{version}' does not exist")
+            raise ValueError(
+                f"Secret '{secret_id}' version '{version}' does not exist")
         self.client.destroy_secret_version(
             request={
                 "name": f"projects/{self.project_id}/secrets/{secret_id}/versions/{version}"
