@@ -63,7 +63,8 @@ def init_secrets(args):
         if secret in args.yaml_secrets:
             secret_content = ""
             secret_extension = "yaml"
-        secret_file = f"{secret_path}/{secret}.{secret_extension}"
+        secret_file = os.path.realpath(
+            f"{secret_path}/{secret}.{secret_extension}")
         with open(secret_file, "w", encoding="utf8") as file:
             file.write(secret_content)
         print(f"Initializing secret {secret_id} into {secret_file}")
@@ -78,7 +79,8 @@ def import_secrets(args):
         if secret_manager.secret_exists(secret_id):
             secret_content = secret_manager.access_secret(secret_id)
             secret_extension = "yaml" if secret in args.yaml_secrets else "json"
-            secret_file = f"{secret_path}/{secret}.{secret_extension}"
+            secret_file = os.path.realpath(
+                f"{secret_path}/{secret}.{secret_extension}")
             if secret in args.yaml_secrets:
                 secret_content = yaml.dump(
                     json.loads(secret_content),
@@ -113,7 +115,8 @@ def export_secrets(args):
     for secret in args.secrets:
         secret_id = build_secret_id(secret, args)
         secret_extension = "yaml" if secret in args.yaml_secrets else "json"
-        secret_file = f"{secret_path}/{secret}.{secret_extension}"
+        secret_file = os.path.realpath(
+            f"{secret_path}/{secret}.{secret_extension}")
         if not os.path.exists(secret_file):
             raise FileNotFoundError(f"File {secret_file} does not exist")
         secret_content = None
@@ -137,7 +140,8 @@ def fake_store(args):
     secrets = []
     for secret in args.secrets:
         secret_extension = "yaml" if secret in args.yaml_secrets else "json"
-        secret_file = f"{secret_path}/{secret}.{secret_extension}"
+        secret_file = os.path.realpath(
+            f"{secret_path}/{secret}.{secret_extension}")
         if not os.path.exists(secret_file):
             raise FileNotFoundError(f"File {secret_file} does not exist")
         secret_content = None
@@ -208,8 +212,8 @@ def diff_secrets(args):
             raise ValueError(f"Secret '{secret_id}' does not exist")
         secret_content = secret_manager.access_secret(secret_id, version)
         secret_extension = "yaml" if secret in args.yaml_secrets else "json"
-        compare_secret_file = f"{
-            secret_path}/{secret}.{version}.{secret_extension}"
+        compare_secret_file = os.path.realpath(
+            f"{secret_path}/{secret}.{version}.{secret_extension}")
         if secret in args.yaml_secrets:
             secret_content = yaml.dump(
                 json.loads(secret_content),
@@ -222,7 +226,8 @@ def diff_secrets(args):
         if secret in args.yaml_secrets:
             prettify_yaml_file(compare_secret_file)
 
-        secret_file = f"{secret_path}/{secret}.{secret_extension}"
+        secret_file = os.path.realpath(
+            f"{secret_path}/{secret}.{secret_extension}")
         if compare_version != "local":
             secret_file = f"{
                 secret_path}/{secret}.{compare_version}.{secret_extension}"
