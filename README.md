@@ -1,5 +1,9 @@
 # Cloud secret manager
 
+This is a python package to handle secrets in cloud environments, handling GCP and AWS secrets.
+
+It also helps to create a manifest to generate fake secrets for development while using external-secrets.io.
+
 ## Setup
 
 Initialize secrets manager:
@@ -13,12 +17,12 @@ Run secret manager:
 ```shell
 # Either activate with poetry shell and run it
 poetry -C . shell
-cloud-secret-manager --help
+es-cloud-secret-manager --help
 # deactive when done
 deactivate
 
 # Either run it through poetry
-poetry -C . run cloud-secret-manager --help
+poetry -C . run es-cloud-secret-manager --help
 ```
 
 Format the code:
@@ -43,15 +47,15 @@ sudo apt install yq moreutils
 # First authenticate to your GCP project
 gcloud auth application-default login --project <project id>
 
-cloud-secret-manager --project project gcp --gcp-project <project id> list --secrets cluster external
-cloud-secret-manager --project project gcp --gcp-project <project id> create --secrets cluster external
-cloud-secret-manager --project project gcp --gcp-project <project id> initialize --secrets cluster external
-cloud-secret-manager --project project gcp --gcp-project <project id> details --secrets cluster external
-cloud-secret-manager --project project gcp --gcp-project <project id> import --secrets cluster external
-cloud-secret-manager --project project gcp --gcp-project <project id> export --secrets cluster external
-cloud-secret-manager --project project gcp --gcp-project <project id> diff --secrets cluster external
-cloud-secret-manager --project project gcp --gcp-project <project id> fake --secrets cluster external
-cloud-secret-manager --project project gcp --gcp-project <project id> delete --secret-name external --version 1
+es-cloud-secret-manager --project project gcp --gcp-project <project id> list --secrets cluster external
+es-cloud-secret-manager --project project gcp --gcp-project <project id> create --secrets cluster external
+es-cloud-secret-manager --project project gcp --gcp-project <project id> initialize --secrets cluster external
+es-cloud-secret-manager --project project gcp --gcp-project <project id> details --secrets cluster external
+es-cloud-secret-manager --project project gcp --gcp-project <project id> import --secrets cluster external
+es-cloud-secret-manager --project project gcp --gcp-project <project id> export --secrets cluster external
+es-cloud-secret-manager --project project gcp --gcp-project <project id> diff --secrets cluster external
+es-cloud-secret-manager --project project gcp --gcp-project <project id> fake --secrets cluster external
+es-cloud-secret-manager --project project gcp --gcp-project <project id> delete --secret-name external --version 1
 ```
 
 ## AWS
@@ -60,15 +64,15 @@ cloud-secret-manager --project project gcp --gcp-project <project id> delete --s
 # First configure AWS
 aws configure
 
-cloud-secret-manager --project project aws --aws-region eu-west-1 list --secrets cluster external
-cloud-secret-manager --project project aws --aws-region eu-west-1 create --secrets cluster external
-cloud-secret-manager --project project aws --aws-region eu-west-1 initialize --secrets cluster external
-cloud-secret-manager --project project aws --aws-region eu-west-1 details --secrets cluster external
-cloud-secret-manager --project project aws --aws-region eu-west-1 import --secrets cluster external
-cloud-secret-manager --project project aws --aws-region eu-west-1 export --secrets cluster external
-cloud-secret-manager --project project aws --aws-region eu-west-1 diff --secrets cluster external
-cloud-secret-manager --project project aws --aws-region eu-west-1 fake --secrets cluster external
-cloud-secret-manager --project project aws --aws-region eu-west-1 delete --secret-name external --version 84e8c4e5-27c7-4nov-z9f5-50c398fe4911
+es-cloud-secret-manager --project project aws --aws-region eu-west-1 list --secrets cluster external
+es-cloud-secret-manager --project project aws --aws-region eu-west-1 create --secrets cluster external
+es-cloud-secret-manager --project project aws --aws-region eu-west-1 initialize --secrets cluster external
+es-cloud-secret-manager --project project aws --aws-region eu-west-1 details --secrets cluster external
+es-cloud-secret-manager --project project aws --aws-region eu-west-1 import --secrets cluster external
+es-cloud-secret-manager --project project aws --aws-region eu-west-1 export --secrets cluster external
+es-cloud-secret-manager --project project aws --aws-region eu-west-1 diff --secrets cluster external
+es-cloud-secret-manager --project project aws --aws-region eu-west-1 fake --secrets cluster external
+es-cloud-secret-manager --project project aws --aws-region eu-west-1 delete --secret-name external --version 84e8c4e5-27c7-4nov-z9f5-50c398fe4911
 ```
 
 ## Release in testpypi
@@ -82,7 +86,7 @@ python3 -m pip install --upgrade build
 python3 -m build
 python3 -m pip install --upgrade twine
 # twine would automatically look for the API token in the ~/.pypirc file
-python3 -m twine upload --repository testpypi dist/cloud_secret_manager-$(grep -e '^version' pyproject.toml | head -1 | cut -d= -f2 | xargs printf)*
+python3 -m twine upload --repository testpypi dist/es_cloud_secret_manager-$(grep -e '^version' pyproject.toml | head -1 | cut -d= -f2 | xargs printf)*
 ```
 
 ```shell
@@ -97,7 +101,7 @@ poetry publish --repository testpypi
 Once deployed on testpypi, you can install it as follow:
 
 ```shell
-python3 -m pip install --upgrade --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ cloud-secret-manager
+python3 -m pip install --upgrade --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ es-cloud-secret-manager
 ```
 
 ## Release in pypi
@@ -111,5 +115,5 @@ Update the version in pyproject.toml and run:
 Once deployed on pypi, you can install it as follow:
 
 ```shell
-python3 -m pip install --upgrade cloud-secret-manager
+python3 -m pip install --upgrade es-cloud-secret-manager
 ```

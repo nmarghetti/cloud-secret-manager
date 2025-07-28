@@ -7,8 +7,8 @@ import subprocess
 
 import yaml
 
-from cloud_secret_manager.aws_secret_manager import AwsSecretManager
-from cloud_secret_manager.gcp_secret_manager import GcpSecretManager
+from es_cloud_secret_manager.aws_secret_manager import AwsSecretManager
+from es_cloud_secret_manager.gcp_secret_manager import GcpSecretManager
 
 
 def prettify_yaml_file(file_path):
@@ -278,12 +278,12 @@ def main() -> None:
 
     # create the top-level parser
     parser = argparse.ArgumentParser(
-        prog="cloud-secret-manager",
+        prog="es-cloud-secret-manager",
         description="""Tool to create/initialize/import/export/list/diff/delete secrets from/to AWS/GCP Secret Manager and generate fake store manifest for testing""",
         epilog="""
 Examples:
-  - cloud-secret-manager --project=project --secret-suffix=-test aws --help
-  - cloud-secret-manager --project=project --secret-suffix=-test gcp --help
+  - es-cloud-secret-manager --project=project --secret-suffix=-test aws --help
+  - es-cloud-secret-manager --project=project --secret-suffix=-test gcp --help
     """,
         formatter_class=argparse.RawTextHelpFormatter,
     )
@@ -326,15 +326,15 @@ Examples:
         help="Amazon AWS Secret Manager helper",
         epilog="""
 Examples:
-  - cloud-secret-manager aws --region eu-west-1 create --secrets application cluster external
-  - cloud-secret-manager aws --region eu-west-1 initialize --secrets application cluster external
-  - cloud-secret-manager aws --region eu-west-1 import --secrets application cluster external
-  - cloud-secret-manager aws --region eu-west-1 export --secrets application cluster external
-  - cloud-secret-manager aws --region eu-west-1 fake --secrets application cluster external
-  - cloud-secret-manager aws --region eu-west-1 list --secrets application cluster external
-  - cloud-secret-manager aws --region eu-west-1 details --secrets application cluster external
-  - cloud-secret-manager aws --region eu-west-1 delete --secret-name external --version 84e8c4e5-27c7-4nov-z9f5-50c398fe4911
-  - cloud-secret-manager aws --region eu-west-1 diff --secrets external
+  - es-cloud-secret-manager aws --region eu-west-1 create --secrets application cluster external
+  - es-cloud-secret-manager aws --region eu-west-1 initialize --secrets application cluster external
+  - es-cloud-secret-manager aws --region eu-west-1 import --secrets application cluster external
+  - es-cloud-secret-manager aws --region eu-west-1 export --secrets application cluster external
+  - es-cloud-secret-manager aws --region eu-west-1 fake --secrets application cluster external
+  - es-cloud-secret-manager aws --region eu-west-1 list --secrets application cluster external
+  - es-cloud-secret-manager aws --region eu-west-1 details --secrets application cluster external
+  - es-cloud-secret-manager aws --region eu-west-1 delete --secret-name external --version 84e8c4e5-27c7-4nov-z9f5-50c398fe4911
+  - es-cloud-secret-manager aws --region eu-west-1 diff --secrets external
     """,
         formatter_class=argparse.RawTextHelpFormatter,
     )
@@ -354,15 +354,15 @@ Examples:
         help="Google GCP Secret Manager helper",
         epilog="""
 Examples:
-  - cloud-secret-manager gcp --gcp-project project create --secrets application cluster external
-  - cloud-secret-manager gcp --gcp-project project initialize --secrets application cluster external
-  - cloud-secret-manager gcp --gcp-project project import --secrets application cluster external
-  - cloud-secret-manager gcp --gcp-project project export --secrets application cluster external
-  - cloud-secret-manager gcp --gcp-project project fake --secrets application cluster external
-  - cloud-secret-manager gcp --gcp-project project list --secrets application cluster external
-  - cloud-secret-manager gcp --gcp-project project details --secrets application cluster external
-  - cloud-secret-manager gcp --gcp-project project delete --secret-name external --version 1
-  - cloud-secret-manager gcp --gcp-project project diff --secrets external
+  - es-cloud-secret-manager gcp --gcp-project project create --secrets application cluster external
+  - es-cloud-secret-manager gcp --gcp-project project initialize --secrets application cluster external
+  - es-cloud-secret-manager gcp --gcp-project project import --secrets application cluster external
+  - es-cloud-secret-manager gcp --gcp-project project export --secrets application cluster external
+  - es-cloud-secret-manager gcp --gcp-project project fake --secrets application cluster external
+  - es-cloud-secret-manager gcp --gcp-project project list --secrets application cluster external
+  - es-cloud-secret-manager gcp --gcp-project project details --secrets application cluster external
+  - es-cloud-secret-manager gcp --gcp-project project delete --secret-name external --version 1
+  - es-cloud-secret-manager gcp --gcp-project project diff --secrets external
     """,
         formatter_class=argparse.RawTextHelpFormatter,
     )
@@ -387,7 +387,7 @@ Examples:
             description="Create new secrets",
             epilog="""
 Examples:
-  - cloud-secret-manager [option,...] <provider> [provider_option,...] create --secrets application cluster external
+  - es-cloud-secret-manager [option,...] <provider> [provider_option,...] create --secrets application cluster external
     """,
             formatter_class=argparse.RawTextHelpFormatter,
         )
@@ -401,7 +401,7 @@ Examples:
             description="Simply create empty secrets file locally (to be done when there is no secret version yet)",
             epilog="""
 Examples:
-  - cloud-secret-manager [option,...] <provider> [provider_option,...] initialize --secrets application cluster external
+  - es-cloud-secret-manager [option,...] <provider> [provider_option,...] initialize --secrets application cluster external
     """,
             formatter_class=argparse.RawTextHelpFormatter,
         )
@@ -415,7 +415,7 @@ Examples:
             description="Retrieve secrets from the vault and store them locally",
             epilog="""
 Examples:
-  - cloud-secret-manager [option,...] <provider> [provider_option,...] import --secrets application cluster external
+  - es-cloud-secret-manager [option,...] <provider> [provider_option,...] import --secrets application cluster external
     """,
             formatter_class=argparse.RawTextHelpFormatter,
         )
@@ -429,7 +429,7 @@ Examples:
             description="Use the local files and export them to the vault",
             epilog="""
 Examples:
-  - cloud-secret-manager [option,...] <provider> [provider_option,...] export --secrets application cluster external
+  - es-cloud-secret-manager [option,...] <provider> [provider_option,...] export --secrets application cluster external
     """,
             formatter_class=argparse.RawTextHelpFormatter,
         )
@@ -443,7 +443,7 @@ Examples:
             description="Use the local files and create a fake store with it",
             epilog="""
 Examples:
-  - cloud-secret-manager [option,...] <provider> [provider_option,...] fake --secrets application cluster external
+  - es-cloud-secret-manager [option,...] <provider> [provider_option,...] fake --secrets application cluster external
     """,
             formatter_class=argparse.RawTextHelpFormatter,
         )
@@ -457,7 +457,7 @@ Examples:
             description="List secrets versions from the vault",
             epilog="""
 Examples:
-  - cloud-secret-manager [option,...] <provider> [provider_option,...] list --secrets application cluster external
+  - es-cloud-secret-manager [option,...] <provider> [provider_option,...] list --secrets application cluster external
     """,
             formatter_class=argparse.RawTextHelpFormatter,
         )
@@ -471,7 +471,7 @@ Examples:
             description="List secrets with more details",
             epilog="""
 Examples:
-  - cloud-secret-manager [option,...] <provider> [provider_option,...] details --secrets application cluster external
+  - es-cloud-secret-manager [option,...] <provider> [provider_option,...] details --secrets application cluster external
     """,
             formatter_class=argparse.RawTextHelpFormatter,
         )
@@ -485,7 +485,7 @@ Examples:
             description="Delete secret version in the vault",
             epilog="""
 Examples:
-  - cloud-secret-manager [option,...] <provider> [provider_option,...] delete --secret-name application --version <version id>
+  - es-cloud-secret-manager [option,...] <provider> [provider_option,...] delete --secret-name application --version <version id>
     """,
             formatter_class=argparse.RawTextHelpFormatter,
         )
@@ -509,7 +509,7 @@ Examples:
             description="Show diff secrets between versions",
             epilog="""
 Examples:
-  - cloud-secret-manager [option,...] <provider> [provider_option,...] diff --secrets application cluster external
+  - es-cloud-secret-manager [option,...] <provider> [provider_option,...] diff --secrets application cluster external
     """,
             formatter_class=argparse.RawTextHelpFormatter,
         )

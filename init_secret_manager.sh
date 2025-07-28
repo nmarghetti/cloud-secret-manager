@@ -20,10 +20,10 @@ declare -A dev_packages=(
   ['common']='toml autopep8 isort'
 )
 
-if [ ! -d ./cloud_secret_manager ]; then
-  poetry new cloud-secret-manager &&
-    mv cloud-secret-manager/* ./ &&
-    rmdir cloud-secret-manager
+if [ ! -d ./es_cloud_secret_manager ]; then
+  poetry new es-cloud-secret-manager &&
+    mv es-cloud-secret-manager/* ./ &&
+    rmdir es-cloud-secret-manager
 fi
 
 poetry config --local virtualenvs.create true
@@ -44,7 +44,7 @@ import toml;
 import os;
 data = toml.load("pyproject.toml");
 
-data.setdefault("tool", {}).setdefault("poetry", {}).setdefault("scripts", {})["secret-manager"] = "secret_manager.main:main";
+data.setdefault("tool", {}).setdefault("poetry", {}).setdefault("scripts", {})["es-cloud-secret-manager"] = "es_cloud_secret_manager.main:main";
 
 toml.dump(data, open("pyproject.toml", "w"));
 EOF

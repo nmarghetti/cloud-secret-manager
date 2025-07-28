@@ -5,5 +5,5 @@ cd "$(dirname "$(readlink -f "$0")")" || {
   exit 1
 }
 
-poetry run isort cloud_secret_manager tests
+poetry run isort es_cloud_secret_manager tests
 poetry run autopep8 --in-place -a -r .
