@@ -4,7 +4,7 @@ import boto3
 from botocore.exceptions import (ClientError, NoCredentialsError,
                                  PartialCredentialsError)
 
-from secret_manager.secret_manager import SecretManager
+from cloud_secret_manager.secret_manager import SecretManager
 
 
 class AwsSecretManager(SecretManager):

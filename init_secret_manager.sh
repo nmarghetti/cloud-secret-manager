@@ -20,10 +20,10 @@ declare -A dev_packages=(
   ['common']='toml autopep8 isort'
 )
 
-if [ ! -d ./secret_manager ]; then
-  poetry new secret-manager &&
-    mv secret-manager/* ./ &&
-    rmdir secret-manager
+if [ ! -d ./cloud_secret_manager ]; then
+  poetry new cloud-secret-manager &&
+    mv cloud-secret-manager/* ./ &&
+    rmdir cloud-secret-manager
 fi
 
 poetry config --local virtualenvs.create true
