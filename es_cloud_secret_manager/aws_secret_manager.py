@@ -82,12 +82,15 @@ class AwsSecretManager(SecretManager):
         try:
             secret = self.client.update_secret(
                 SecretId=secret_id, SecretString=secret_value)
-            # label with the date of the update in the format year-month-day_hour-minute-second, gmt timezone
+            # label with the date of the update in the format
+            # year-month-day_hour-minute-second, gmt timezone
             from datetime import datetime
+
             from dateutil.tz import tzutc
             self.client.update_secret_version_stage(
                 SecretId=secret.get("ARN", None),
-                VersionStage=datetime.now(tz=tzutc()).strftime("%Y-%m-%d_%H-%M-%S"),
+                VersionStage=datetime.now(
+                    tz=tzutc()).strftime("%Y-%m-%d_%H-%M-%S"),
                 MoveToVersionId=secret["VersionId"],
             )
             print(f"Secret {secret_id} updated successfully.")
@@ -111,14 +114,14 @@ class AwsSecretManager(SecretManager):
 
     def delete_secret(self, secret_id):
         try:
-          secret = self.client.update_secret(
-              SecretId=secret_id)
-          self.client.delete_secret(
-              request={"name": self.client.secret_path(
-                  self.project_id, secret_id)}
-          )
+            secret = self.client.update_secret(
+                SecretId=secret_id)
+            self.client.delete_secret(
+                request={"name": self.client.secret_path(
+                    self.project_id, secret_id)}
+            )
         except ClientError as e:
-          print(f"Error: {e}")
+            print(f"Error: {e}")
 
     def list_versions(self, secret_id):
         if not self.secret_exists(secret_id):
@@ -146,12 +149,12 @@ class AwsSecretManager(SecretManager):
                 VersionId=version_id
             )
             for stage in secret.get("VersionStages", []):
-              print(f"Removing stage {stage} from version {version_id}")
-              self.client.update_secret_version_stage(
-                  SecretId=secret_id,
-                  VersionStage=stage,
-                  RemoveFromVersionId=version_id,
-              )
+                print(f"Removing stage {stage} from version {version_id}")
+                self.client.update_secret_version_stage(
+                    SecretId=secret_id,
+                    VersionStage=stage,
+                    RemoveFromVersionId=version_id,
+                )
             print(
                 f"Version {version_id} of secret {secret_id} as no more stage and will be removed."
             )
