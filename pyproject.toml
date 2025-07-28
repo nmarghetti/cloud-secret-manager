@@ -1,6 +1,6 @@
 [project]
 name = "es-cloud-secret-manager"
-version = "1.0.0"
+version = "2.0.0"
 description = "A package to handle secrets in cloud environments"
 readme = "README.md"
 requires-python = ">=3.13"
@@ -17,7 +17,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "es-cloud-secret-manager"
-version = "1.0.0"
+version = "2.0.0"
 description = ""
 authors = [ "nmarghetti <marghettinicolas@hotmail.com>",]
 readme = "README.md"
@@ -31,6 +31,7 @@ google-crc32c = "^1.6.0"
 
 [tool.poetry.scripts]
 es-cloud-secret-manager = "es_cloud_secret_manager.main:main"
+secret-manager = "es_cloud_secret_manager.main:main"
 
 [tool.poetry.group.dev.dependencies]
 toml = "^0.10.2"

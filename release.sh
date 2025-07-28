@@ -10,6 +10,8 @@ exit_error () {
   exit 1
 }
 
+./format.sh
+
 # Check if we are on the main branch and there are no uncommitted changes
 [ "$(git symbolic-ref --short HEAD)" = "main" ] || exit_error "You are not on the main branch, please switch to main"
 [ -z "$(git status --porcelain)" ] || exit_error "There are uncommitted changes / untracked files. Please commit or stash them before releasing."
