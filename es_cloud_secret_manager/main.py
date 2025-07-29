@@ -106,8 +106,7 @@ def import_secrets(args):
 
 def create_secrets(args):
     secret_manager = get_secret_manager(args)
-    for secret in args.secrets:
-        secret_id = build_secret_id(args)
+    for secret_id in args.secret:
         if secret_manager.secret_exists(secret_id):
             raise ValueError(f"Secret already exists: '{secret_id}'")
         secret_manager.create_secret(secret_id, "{}")
@@ -133,6 +132,7 @@ def export_secrets(args):
                 secret_content = file.read()
         if not secret_content:
             raise ValueError(f"Unable to retrieve content of {secret_file}")
+        print(f"Exporting secret {secret_id} from {secret_file}")
         secret_manager.update_secret_from_content(secret_id, secret_content)
 
 
@@ -182,13 +182,14 @@ def fake_store(args):
 
 def list_secrets(args):
     secret_manager = get_secret_manager(args)
-    secret_id = build_secret_id(args)
-    secret_manager.list_versions(secret_id)
+    for secret_id in args.secret:
+        secret_manager.list_versions(secret_id)
 
 
 def details_secrets(args):
     secret_manager = get_secret_manager(args)
-    secret_manager.list_secrets(args.secret)
+    for secret_id in args.secret:
+        secret_manager.list_versions(secret_id)
 
 
 def delete_secret_version(args):
