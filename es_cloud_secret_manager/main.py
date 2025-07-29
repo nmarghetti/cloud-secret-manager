@@ -312,15 +312,15 @@ Examples:
         help="Amazon AWS Secret Manager helper",
         epilog="""
 Examples:
-  - %(prog)s aws --region eu-west-1 create --secret secret-project-application-test
-  - %(prog)s aws --region eu-west-1 initialize --secret secret-project-application-test
-  - %(prog)s aws --region eu-west-1 import --secret secret-project-application-test
-  - %(prog)s aws --region eu-west-1 export --secret secret-project-application-test
-  - %(prog)s aws --region eu-west-1 fake --secret secret-project-application-test
-  - %(prog)s aws --region eu-west-1 list --secret secret-project-application-test
-  - %(prog)s aws --region eu-west-1 details --secret secret-project-application-test
-  - %(prog)s aws --region eu-west-1 delete --secret secret-project-application-test --version 84e8c4e5-27c7-4nov-z9f5-50c398fe4911
-  - %(prog)s aws --region eu-west-1 diff --secret secret-project-application-test
+  - %(prog)s --region eu-west-1 create --secret secret-project-application-test
+  - %(prog)s --region eu-west-1 initialize --secret secret-project-application-test
+  - %(prog)s --region eu-west-1 import --secret secret-project-application-test
+  - %(prog)s --region eu-west-1 export --secret secret-project-application-test
+  - %(prog)s --region eu-west-1 fake --secret secret-project-application-test
+  - %(prog)s --region eu-west-1 list --secret secret-project-application-test
+  - %(prog)s --region eu-west-1 details --secret secret-project-application-test
+  - %(prog)s --region eu-west-1 delete --secret secret-project-application-test --version 84e8c4e5-27c7-4nov-z9f5-50c398fe4911
+  - %(prog)s --region eu-west-1 diff --secret secret-project-application-test
     """,
         formatter_class=argparse.RawTextHelpFormatter,
     )
@@ -340,15 +340,15 @@ Examples:
         help="Google GCP Secret Manager helper",
         epilog="""
 Examples:
-  - %(prog)s gcp --gcp-project project create --secret secret-project-application-test
-  - %(prog)s gcp --gcp-project project initialize --secret secret-project-application-test
-  - %(prog)s gcp --gcp-project project import --secret secret-project-application-test
-  - %(prog)s gcp --gcp-project project export --secret secret-project-application-test
-  - %(prog)s gcp --gcp-project project fake --secret secret-project-application-test
-  - %(prog)s gcp --gcp-project project list --secret secret-project-application-test
-  - %(prog)s gcp --gcp-project project details --secret secret-project-application-test
-  - %(prog)s gcp --gcp-project project delete --secret secret-project-application-test --version 1
-  - %(prog)s gcp --gcp-project project diff --secret secret-project-application-test
+  - %(prog)s --gcp-project project create --secret secret-project-application-test
+  - %(prog)s --gcp-project project initialize --secret secret-project-application-test
+  - %(prog)s --gcp-project project import --secret secret-project-application-test
+  - %(prog)s --gcp-project project export --secret secret-project-application-test
+  - %(prog)s --gcp-project project fake --secret secret-project-application-test
+  - %(prog)s --gcp-project project list --secret secret-project-application-test
+  - %(prog)s --gcp-project project details --secret secret-project-application-test
+  - %(prog)s --gcp-project project delete --secret secret-project-application-test --version 1
+  - %(prog)s --gcp-project project diff --secret secret-project-application-test
     """,
         formatter_class=argparse.RawTextHelpFormatter,
     )
