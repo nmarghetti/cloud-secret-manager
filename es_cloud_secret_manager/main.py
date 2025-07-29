@@ -184,8 +184,8 @@ def fake_store(args):
                 secret_content = file.read()
         if not secret_content:
             raise ValueError(f"Unable to retrieve content of {secret_file}")
-        secrets.append({"key": secret if args.store_key is None else re.sub(
-            args.store_key, args.store_key_replace, secret), "value": secret_content})
+        secrets.append({"key": secret if args.store_key_regexp is None else re.sub(
+            args.store_key_regexp, args.store_key_replace, secret), "value": secret_content})
     with open(fake_store_filename, "w", encoding="utf8") as file:
         file.write(
             yaml.dump(
@@ -463,7 +463,7 @@ Examples:
         fake_parser.set_defaults(func=fake_store)
         add_common_args(fake_parser)
         fake_parser.add_argument(
-            "--store-key",
+            "--store-key-regexp",
             type=str,
             default=None,
             help="Regexp to extract the key of the secret to use in the fake store, from the secret name, eg. 'secret-project-(.*)-test'",

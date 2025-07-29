@@ -78,7 +78,10 @@ es-cloud-secret-manager --project project aws --aws-region eu-west-1 delete --se
 ## External-secrets.io fake store
 
 ```shell
-
+# This would create a kubernetes manifest to create fake secrets store for external-secrets.io
+# You can use regexp to extract the key from the secret name, eg. 'project-(.*)-test' to extract 'cluster' from 'project-cluster-test'
+# That allows to change the entry in the store, eg. 'cluster' instead of 'project-cluster-test'
+es-cloud-secret-manager aws --aws-region eu-west-1 fake --secret project-cluster-test project-external-test --store-key-regexp 'project-(.*)-test' --store-key-replace '\1'
 ```
 
 ## Release in testpypi
