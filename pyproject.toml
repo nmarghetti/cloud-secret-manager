@@ -1,6 +1,6 @@
 [project]
 name = "es-cloud-secret-manager"
-version = "2.0.2"
+version = "2.0.3"
 description = "A package to handle secrets in cloud environments"
 readme = "README.md"
 requires-python = ">=3.13"
@@ -17,7 +17,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "es-cloud-secret-manager"
-version = "2.0.2"
+version = "2.0.3"
 description = ""
 authors = [ "nmarghetti <marghettinicolas@hotmail.com>",]
 readme = "README.md"

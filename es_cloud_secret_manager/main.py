@@ -5,11 +5,35 @@ import json
 import os
 import re
 import subprocess
+from importlib.metadata import PackageNotFoundError, version
 
+import toml
 import yaml
 
 from es_cloud_secret_manager.aws_secret_manager import AwsSecretManager
 from es_cloud_secret_manager.gcp_secret_manager import GcpSecretManager
+
+
+def get_version():
+    """Get the version of the package.
+
+    First tries to get it using importlib.metadata (for installed packages),
+    then falls back to reading from pyproject.toml (for development).
+    """
+    try:
+        # Try to get version from installed package metadata
+        return version("es-cloud-secret-manager")
+    except PackageNotFoundError:
+        # Fall back to reading from pyproject.toml during development
+        try:
+            pyproject_path = os.path.join(
+                os.path.dirname(
+                    os.path.dirname(__file__)),
+                "pyproject.toml")
+            data = toml.load(pyproject_path)
+            return data.get("project", {}).get("version", "unknown")
+        except (FileNotFoundError, KeyError):
+            return "unknown"
 
 
 def prettify_yaml_file(file_path):
@@ -287,6 +311,9 @@ Examples:
     )
     parser.add_argument(
         "-d", "--debug", action="store_true", help="Enable debug mode"
+    )
+    parser.add_argument(
+        "--version", action="version", version=f"{get_version()}"
     )
     parser.add_argument(
         "--secret-path",
