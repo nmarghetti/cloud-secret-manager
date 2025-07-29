@@ -7,7 +7,6 @@ import re
 import subprocess
 from importlib.metadata import PackageNotFoundError, version
 
-import toml
 import yaml
 
 from es_cloud_secret_manager.aws_secret_manager import AwsSecretManager
@@ -26,6 +25,7 @@ def get_version():
     except PackageNotFoundError:
         # Fall back to reading from pyproject.toml during development
         try:
+            import toml
             pyproject_path = os.path.join(
                 os.path.dirname(
                     os.path.dirname(__file__)),
