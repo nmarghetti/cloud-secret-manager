@@ -47,15 +47,15 @@ sudo apt install yq moreutils
 # First authenticate to your GCP project
 gcloud auth application-default login --project <project id>
 
-es-cloud-secret-manager --project project gcp --gcp-project <project id> list --secret cluster external
-es-cloud-secret-manager --project project gcp --gcp-project <project id> create --secret cluster external
-es-cloud-secret-manager --project project gcp --gcp-project <project id> initialize --secret cluster external
-es-cloud-secret-manager --project project gcp --gcp-project <project id> details --secret cluster external
-es-cloud-secret-manager --project project gcp --gcp-project <project id> import --secret cluster external
-es-cloud-secret-manager --project project gcp --gcp-project <project id> export --secret cluster external
-es-cloud-secret-manager --project project gcp --gcp-project <project id> diff --secret cluster external
-es-cloud-secret-manager --project project gcp --gcp-project <project id> fake --secret cluster external
-es-cloud-secret-manager --project project gcp --gcp-project <project id> delete --secret external --version 1
+es-cloud-secret-manager gcp --gcp-project <project id> list --secret cluster external
+es-cloud-secret-manager gcp --gcp-project <project id> create --secret cluster external
+es-cloud-secret-manager gcp --gcp-project <project id> initialize --secret cluster external
+es-cloud-secret-manager gcp --gcp-project <project id> details --secret cluster external
+es-cloud-secret-manager gcp --gcp-project <project id> import --secret cluster external
+es-cloud-secret-manager gcp --gcp-project <project id> export --secret cluster external
+es-cloud-secret-manager gcp --gcp-project <project id> diff --secret cluster external
+es-cloud-secret-manager gcp --gcp-project <project id> fake --secret cluster external
+es-cloud-secret-manager gcp --gcp-project <project id> delete --secret external --version 1
 ```
 
 ## AWS
@@ -64,15 +64,15 @@ es-cloud-secret-manager --project project gcp --gcp-project <project id> delete 
 # First configure AWS
 aws configure
 
-es-cloud-secret-manager --project project aws --aws-region eu-west-1 list --secret cluster external
-es-cloud-secret-manager --project project aws --aws-region eu-west-1 create --secret cluster external
-es-cloud-secret-manager --project project aws --aws-region eu-west-1 initialize --secret cluster external
-es-cloud-secret-manager --project project aws --aws-region eu-west-1 details --secret cluster external
-es-cloud-secret-manager --project project aws --aws-region eu-west-1 import --secret cluster external
-es-cloud-secret-manager --project project aws --aws-region eu-west-1 export --secret cluster external
-es-cloud-secret-manager --project project aws --aws-region eu-west-1 diff --secret cluster external
-es-cloud-secret-manager --project project aws --aws-region eu-west-1 fake --secret cluster external
-es-cloud-secret-manager --project project aws --aws-region eu-west-1 delete --secret external --version 84e8c4e5-27c7-4nov-z9f5-50c398fe4911
+es-cloud-secret-manager aws --aws-region eu-west-1 list --secret cluster external
+es-cloud-secret-manager aws --aws-region eu-west-1 create --secret cluster external
+es-cloud-secret-manager aws --aws-region eu-west-1 initialize --secret cluster external
+es-cloud-secret-manager aws --aws-region eu-west-1 details --secret cluster external
+es-cloud-secret-manager aws --aws-region eu-west-1 import --secret cluster external
+es-cloud-secret-manager aws --aws-region eu-west-1 export --secret cluster external
+es-cloud-secret-manager aws --aws-region eu-west-1 diff --secret cluster external
+es-cloud-secret-manager aws --aws-region eu-west-1 fake --secret cluster external
+es-cloud-secret-manager aws --aws-region eu-west-1 delete --secret external --version 84e8c4e5-27c7-4nov-z9f5-50c398fe4911
 ```
 
 ## External-secrets.io fake store
