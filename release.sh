@@ -10,6 +10,7 @@ exit_error () {
   exit 1
 }
 
+echo "Formatting the code..."
 ./format.sh
 
 # Check if we are on the main branch and there are no uncommitted changes

@@ -60,16 +60,16 @@ def build_secret_id(args):
 
 
 def build_secret_path(args):
-    secret_path = f"{args.secret_path.replace(
+    secret_path = args.secret_path
+    secret_path = f"{secret_path.replace(
         '{provider}', args.provider)}"
-    if args.project is not None:
-        secret_path = f"{secret_path}/{args.project}"
-    if args.provider == "aws":
-        return f"{secret_path}/{args.aws_region}"
-    elif args.provider == "gcp":
-        return f"{secret_path}/{args.gcp_project}"
-    else:
-        raise ValueError(f"Provider {args.provider} not supported")
+    secret_path = f"{secret_path.replace(
+        '{aws-region}', args.aws_region if args.provider == 'aws' else '')}"
+    secret_path = f"{secret_path.replace(
+        '{gcp-project}', args.gcp_project if args.provider == 'gcp' else '')}"
+    secret_path = f"{secret_path.replace(
+        '{project}', args.project if args.project is not None else '')}"
+    return os.path.realpath(secret_path)
 
 
 def build_fake_store_path(args):
@@ -318,9 +318,10 @@ Examples:
     parser.add_argument(
         "--secret-path",
         type=str,
-        default=f"{os.environ['HOME']}/.cloud-secrets/{'{provider}'}",
-        help=f"path where to import/export secrets (default={
-            os.environ['HOME']}/.cloud-secrets/{'{provider}'})",
+        default=f"{
+            os.environ['HOME']}/.cloud-secrets/{'{provider}'}/{'{aws-region}{gcp-project}'}",
+        help=f"path where to import/export secrets with few placeholders ({'{provider}, {aws-region}, {gcp-project}, {project}'}) (default={
+            os.environ['HOME']}/.cloud-secrets/{'{provider}'}/{'{aws-region|gcp-project}'}",
     )
     parser.add_argument(
         "--project",
